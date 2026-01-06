@@ -2,6 +2,7 @@ package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,9 @@ public class OrderController {
     }
 
     @GetMapping("/admin/order")
-    public String getDashboard(Model model) {
-        List<Order> orders = orderService.getAllOrders();
+    public String getOrders(Model model, @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "5") int size) {
+        Page<Order> orders = orderService.getAllOrders(page, size);
         model.addAttribute("orders", orders);
         return "admin/order/show";
     }

@@ -76,8 +76,10 @@
                                         <tr>
                                             <td>${order.id}</td>
                                             <td>${order.orderDate}</td>
-                                            <td>${order.totalPrice}</td>
-                                            <td>${order.status}</td>
+                                            <td>
+                                                <fmt:formatNumber type="number" value="${order.totalPrice}" />
+                                            </td>
+                                            <td>${order.status.getLabel()}</td>
                                             <td>
                                                 <button class="btn btn-sm btn-primary btn-view-detail"
                                                     data-id="${order.id}">

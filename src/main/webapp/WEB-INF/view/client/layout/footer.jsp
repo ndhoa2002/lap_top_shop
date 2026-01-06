@@ -8,7 +8,7 @@
                         <div class="col-lg-3">
                             <a href="https://hoidanit.vn" target="_blank">
                                 <h1 class="text-primary mb-0">Laptopshop</h1>
-                                <p class="text-secondary mb-0">@hoidanit</p>
+                                <p class="text-secondary mb-0">@ndhoa</p>
                             </a>
                         </div>
                     </div>
@@ -36,8 +36,8 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">Contact</h4>
-                            <p>Author:Hỏi Dân IT</p>
-                            <p>Website: <a href="https://hoidanit.vn" target="_blank"> hoidanit.vn</a></p>
+                            <p>Author:Nguyễn Hòa</p>
+                            <!-- <p>Website: <a href="https://hoidanit.vn" target="_blank"> hoidanit.vn</a></p> -->
                         </div>
                     </div>
                 </div>
@@ -50,9 +50,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="https://hoidanit.vn" target="_blank"><i
+                        <!-- <span class="text-light"><a href="https://hoidanit.vn" target="_blank"><i
                                     class="fas fa-copyright text-light me-2"></i>Hỏi Dân IT</a>, All right
-                            reserved.</span>
+                            reserved.</span> -->
                     </div>
                     <div class="col-md-6 my-auto text-center text-md-end text-white">
                         <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->

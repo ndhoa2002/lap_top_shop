@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -51,8 +52,9 @@ public class UserController {
     // }
 
     @RequestMapping("/admin/user")
-    public String getUserPage(Model model) {
-        List<User> users = this.userService.getAllUsers();
+    public String getUserPage(Model model, @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "5") int size) {
+        Page<User> users = this.userService.getAllUsers(page, size);
         model.addAttribute("users", users);
         return "admin/user/show";
     }

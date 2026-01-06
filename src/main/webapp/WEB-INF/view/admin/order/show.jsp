@@ -32,7 +32,7 @@
                                 <div class="row">
                                     <div class="col-12 mx-auto">
                                         <div class="d-flex justify-content-between">
-                                            <h3>Table products</h3>
+                                            <h3>Table orders</h3>
                                         </div>
 
                                         <hr />
@@ -50,7 +50,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="order" items="${orders}">
+                                                <c:forEach var="order" items="${orders.content}">
                                                     <tr>
                                                         <td>${order.id}</td>
                                                         <td>${order.fullName}</td>
@@ -78,6 +78,47 @@
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
+
+                                                <nav>
+                                                    <ul class="pagination">
+
+                                                        <!-- Previous -->
+                                                        <li class="page-item ${orders.first ? 'disabled' : ''}">
+                                                            <a class="page-link"
+                                                                href="?page=${orders.number - 1}&size=${orders.size}">Previous</a>
+                                                        </li>
+
+                                                        <!-- Page numbers (tối đa 3 số) -->
+                                                        <c:set var="currentPage" value="${orders.number}" />
+                                                        <c:set var="totalPages" value="${orders.totalPages}" />
+
+                                                        <c:set var="start" value="${currentPage - 1}" />
+                                                        <c:set var="end" value="${currentPage + 1}" />
+
+                                                        <!-- đảm bảo không vượt quá range -->
+                                                        <c:if test="${start < 0}">
+                                                            <c:set var="start" value="0" />
+                                                        </c:if>
+                                                        <c:if test="${end >= totalPages}">
+                                                            <c:set var="end" value="${totalPages - 1}" />
+                                                        </c:if>
+
+                                                        <c:forEach var="i" begin="${start}" end="${end}">
+                                                            <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                                <a class="page-link"
+                                                                    href="?page=${i}&size=${orders.size}">${i
+                                                                    + 1}</a>
+                                                            </li>
+                                                        </c:forEach>
+
+                                                        <!-- Next -->
+                                                        <li class="page-item ${orders.last ? 'disabled' : ''}">
+                                                            <a class="page-link"
+                                                                href="?page=${orders.number + 1}&size=${orders.size}">Next</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </nav>
                                             </tbody>
                                         </table>
 
@@ -91,7 +132,7 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        
+
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-danger"

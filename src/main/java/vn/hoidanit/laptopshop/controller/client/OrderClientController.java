@@ -31,17 +31,18 @@ public class OrderClientController {
     private final OrderService orderService;
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
-    
-    public OrderClientController(OrderService orderService, UserRepository userRepository, CartRepository cartRepository) {
+
+    public OrderClientController(OrderService orderService, UserRepository userRepository,
+            CartRepository cartRepository) {
         this.orderService = orderService;
         this.userRepository = userRepository;
         this.cartRepository = cartRepository;
     }
 
     @GetMapping("/checkout")
-    public String getCheckOutPage(Model model, HttpServletRequest request){
+    public String getCheckOutPage(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        String email = (String)session.getAttribute("email");
+        String email = (String) session.getAttribute("email");
         List<CartDetail> cartDetails = orderService.getCartDetails(email);
         User user = userRepository.findByEmail(email);
         Cart cart = cartRepository.findByUser(user);
@@ -53,21 +54,27 @@ public class OrderClientController {
 
     @PostMapping("/checkout/success")
     public String handleCheckout(@ModelAttribute("checkout") @Valid OrderDTO orderDTO, BindingResult bindingResult,
-                                HttpServletRequest request){
-        
-        if(bindingResult.hasErrors()){
+            HttpServletRequest request, Model model) {
+
+        HttpSession session = request.getSession(false);
+        String email = (String) session.getAttribute("email");
+
+        if (bindingResult.hasErrors()) {
+            List<CartDetail> cartDetails = orderService.getCartDetails(email);
+            User user = userRepository.findByEmail(email);
+            Cart cart = cartRepository.findByUser(user);
+            model.addAttribute("totalPrice", cart.getTotalPrice());
+            model.addAttribute("cartDetails", cartDetails);
             return "client/order/checkout";
         }
 
-        HttpSession session = request.getSession(false);
-        String email = (String)session.getAttribute("email");
         orderService.hanleSaveOrder(email, orderDTO, session);
 
         return "client/order/orderSuccess";
     }
 
     @GetMapping("/orders")
-    public String getAllOrder(Model model, HttpServletRequest request){
+    public String getAllOrder(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         List<Order> orders = orderService.getAllOrdersByUser(session);
         model.addAttribute("orders", orders);

@@ -6,25 +6,25 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class OrderDTO {
     
-    @NotBlank
+    @NotBlank(message = "Không được để trống")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Không được để trống")
     private String lastName;
 
-    @NotBlank
+    @NotBlank(message = "Không được để trống")
     private String houseNumber;
 
-    @NotBlank
+    @NotBlank(message = "Không được để trống")
     private String ward;
 
-    @NotBlank
+    @NotBlank(message = "Không được để trống")
     private String town;
 
-    @NotBlank
+    @NotBlank(message = "Không được để trống")
     private String province;
 
-    @NotBlank
+    @NotBlank(message = "Không được để trống")
     private String phone;
 
     @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")

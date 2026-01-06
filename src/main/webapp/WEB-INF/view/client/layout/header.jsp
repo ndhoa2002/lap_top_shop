@@ -14,9 +14,19 @@
                     <div class="collapse navbar-collapse bg-white justify-content-between mx-5" id="navbarCollapse">
                         <div class="navbar-nav">
                             <a href="/" class="nav-item nav-link active">Trang Chủ</a>
-                            <a href="/products" class="nav-item nav-link">Sản Phẩm</a>
+                            <!-- <a href="/products" class="nav-item nav-link">Sản Phẩm</a> -->
 
                         </div>
+
+
+                        <!-- 🔍 Search form -->
+                        <form class="d-flex mx-auto" action="/" method="get">
+                            <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..."
+                                name="name" value="${param.name}">
+                            <button class="btn btn-outline-primary" type="submit">Search</button>
+                        </form>
+
+
                         <div class="d-flex m-3 me-0">
                             <c:if test="${not empty pageContext.request.userPrincipal}">
 

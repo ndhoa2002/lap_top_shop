@@ -46,7 +46,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="product" items="${products}">
+                                                <c:forEach var="product" items="${products.content}">
                                                     <tr>
                                                         <td>${product.id}</td>
                                                         <td>${product.name}</td>
@@ -62,6 +62,50 @@
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
+                                                <nav>
+                                                            <ul class="pagination">
+
+                                                                <!-- Previous -->
+                                                                <li
+                                                                    class="page-item ${products.first ? 'disabled' : ''}">
+                                                                    <a class="page-link"
+                                                                        href="?page=${products.number - 1}&size=${products.size}">Previous</a>
+                                                                </li>
+
+                                                                <!-- Page numbers (tối đa 3 số) -->
+                                                                <c:set var="currentPage" value="${products.number}" />
+                                                                <c:set var="totalPages"
+                                                                    value="${products.totalPages}" />
+
+                                                                <c:set var="start" value="${currentPage - 1}" />
+                                                                <c:set var="end" value="${currentPage + 1}" />
+
+                                                                <!-- đảm bảo không vượt quá range -->
+                                                                <c:if test="${start < 0}">
+                                                                    <c:set var="start" value="0" />
+                                                                </c:if>
+                                                                <c:if test="${end >= totalPages}">
+                                                                    <c:set var="end" value="${totalPages - 1}" />
+                                                                </c:if>
+
+                                                                <c:forEach var="i" begin="${start}" end="${end}">
+                                                                    <li
+                                                                        class="page-item ${i == currentPage ? 'active' : ''}">
+                                                                        <a class="page-link"
+                                                                            href="?page=${i}&size=${products.size}">${i
+                                                                            + 1}</a>
+                                                                    </li>
+                                                                </c:forEach>
+
+                                                                <!-- Next -->
+                                                                <li
+                                                                    class="page-item ${products.last ? 'disabled' : ''}">
+                                                                    <a class="page-link"
+                                                                        href="?page=${products.number + 1}&size=${products.size}">Next</a>
+                                                                </li>
+
+                                                            </ul>
+                                                        </nav>
                                             </tbody>
                                         </table>
 

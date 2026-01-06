@@ -46,7 +46,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="user" items="${users}">
+                                                <c:forEach var="user" items="${users.content}">
                                                     <tr>
                                                         <td>${user.id}</td>
                                                         <td>${user.email}</td>
@@ -62,6 +62,47 @@
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
+
+                                                <nav>
+                                                    <ul class="pagination">
+
+                                                        <!-- Previous -->
+                                                        <li class="page-item ${users.first ? 'disabled' : ''}">
+                                                            <a class="page-link"
+                                                                href="?page=${users.number - 1}&size=${users.size}">Previous</a>
+                                                        </li>
+
+                                                        <!-- Page numbers (tối đa 3 số) -->
+                                                        <c:set var="currentPage" value="${users.number}" />
+                                                        <c:set var="totalPages" value="${users.totalPages}" />
+
+                                                        <c:set var="start" value="${currentPage - 1}" />
+                                                        <c:set var="end" value="${currentPage + 1}" />
+
+                                                        <!-- đảm bảo không vượt quá range -->
+                                                        <c:if test="${start < 0}">
+                                                            <c:set var="start" value="0" />
+                                                        </c:if>
+                                                        <c:if test="${end >= totalPages}">
+                                                            <c:set var="end" value="${totalPages - 1}" />
+                                                        </c:if>
+
+                                                        <c:forEach var="i" begin="${start}" end="${end}">
+                                                            <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                                <a class="page-link"
+                                                                    href="?page=${i}&size=${users.size}">${i
+                                                                    + 1}</a>
+                                                            </li>
+                                                        </c:forEach>
+
+                                                        <!-- Next -->
+                                                        <li class="page-item ${users.last ? 'disabled' : ''}">
+                                                            <a class="page-link"
+                                                                href="?page=${users.number + 1}&size=${users.size}">Next</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </nav>
                                             </tbody>
                                         </table>
 

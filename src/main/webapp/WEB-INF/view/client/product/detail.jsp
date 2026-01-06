@@ -82,21 +82,22 @@
                                             <i class="fa fa-star"></i>
                                         </div>
                                         <p class="mb-4">${product.shortDesc}</p>
-                                        <div class="input-group quantity mb-5" style="width: 100px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0"
-                                                value="1">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
                                         <form action="/add-product-to-cart/${product.id}" method="post">
+                                            <div class="input-group quantity mb-5" style="width: 100px;">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-sm btn-minus-d rounded-circle bg-light border">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                                <input type="text" name="quantity"
+                                                    class="form-control form-control-sm text-center border-0 quantity-input" value="1">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-sm btn-plus-d rounded-circle bg-light border">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                             <button
                                                 class="mx-auto btn border border-secondary rounded-pill px-3 text-primary"><i

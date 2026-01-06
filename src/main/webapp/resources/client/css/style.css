@@ -247,13 +247,14 @@
 
 
 /*** featurs Start ***/
+
 .featurs .featurs-item .featurs-icon {
-    position: relative;
+    /* position: relative; */
     width: 120px;
     height: 120px;
 }
 
-.featurs .featurs-item .featurs-icon::after {
+/* .featurs .featurs-item .featurs-icon::after {
     content: "";
     width: 35px;
     height: 35px;
@@ -264,7 +265,7 @@
     transform: rotate(45deg);
     background: var(--bs-secondary);
 
-}
+} */
 
 /*** featurs End ***/
 
@@ -510,3 +511,13 @@
 }
 
 /*** Footer End ***/
+
+
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;  /* tự xuống dòng nếu quá dài */
+}
+.pagination li {
+    margin: 0 3px; /* căn khoảng cách nút */
+}

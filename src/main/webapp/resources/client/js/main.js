@@ -212,5 +212,89 @@
     });
 
 
+
+
+    $(document).ready(function () {
+        // Lắng nghe thay đổi ở checkbox và radio
+        $(".checkbox-factory, .price-radio, .checkbox-target").on("change", function () {
+            applyFilters();
+        });
+
+        function applyFilters() {
+            // Lấy danh sách factory từ checkbox
+            let factories = [];
+            $(".checkbox-factory:checked").each(function () {
+                factories.push($(this).val());
+            });
+
+            // Lấy danh sách target từ checkbox
+            let targets = [];
+            $(".checkbox-target:checked").each(function () {
+                targets.push($(this).val());
+            })
+
+            // Lấy giá trị price từ radio
+            let minPrice = null;
+            let maxPrice = null;
+            let priceRange = $(".price-radio:checked").val();
+            if (priceRange) {
+                if (priceRange.startsWith("<")) {
+                    maxPrice = priceRange.substring(1); // vd: "<10000000" → 10000000
+                } else if (priceRange.startsWith(">")) {
+                    minPrice = priceRange.substring(1); // vd: ">30000000" → 30000000
+                } else {
+                    let parts = priceRange.split("-");
+                    minPrice = parts[0];
+                    maxPrice = parts[1];
+                }
+            }
+
+            // Gửi AJAX call đến BE
+            $.ajax({
+                url: "/",  // BE của bạn đang map @GetMapping("/")
+                type: "GET",
+                traditional: true,
+                data: {
+                    factory: factories,
+                    target: targets,  // backend có thể tách chuỗi ra
+                    minPrice: minPrice,
+                    maxPrice: maxPrice
+                },
+                success: function (response) {
+                    // Thay thế phần danh sách sản phẩm
+                    let newContent = $(response).find("#product-list").html();
+                    $("#product-list").html(newContent);
+                },
+                error: function () {
+                    alert("Không tải được sản phẩm, vui lòng thử lại!");
+                }
+            });
+        }
+    });
+
+
+
+
 })(jQuery);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".quantity").forEach(function (quantityBox) {
+        const input = quantityBox.querySelector(".quantity-input");
+        const btnPlus = quantityBox.querySelector(".btn-plus-d");
+        const btnMinus = quantityBox.querySelector(".btn-minus-d");
+
+        btnPlus.addEventListener("click", function () {
+            let value = parseInt(input.value) || 1;
+            input.value = value + 1;
+        });
+
+        btnMinus.addEventListener("click", function () {
+            let value = parseInt(input.value) || 1;
+            if (value > 1) {
+                input.value = value - 1;
+            }
+        });
+    });
+});
 

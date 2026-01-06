@@ -2,6 +2,8 @@ package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.Valid;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.filter.ProductFilter;
 import vn.hoidanit.laptopshop.service.ProductService;
 import vn.hoidanit.laptopshop.service.UploadService;
 
@@ -33,8 +36,22 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String getAllProduct(Model model) {
-        List<Product> products = productService.getAllProducts();
+    public String getAllProduct(Model model, @RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "5") int size,
+    @RequestParam(required = false) String name,
+    @RequestParam(required = false) Double minPrice,
+    @RequestParam(required = false) Double maxPrice,
+    @RequestParam(required = false) List<String> factory,
+    @RequestParam(required = false) List<String> target) {
+
+        Specification<Product> spec = Specification
+            .where(ProductFilter.nameLike(name))
+            .and(ProductFilter.priceGreaterThanOrEqual(minPrice))
+            .and(ProductFilter.priceLessThanOrEqual(maxPrice))
+            .and(ProductFilter.factoryIs(factory))
+            .and(ProductFilter.targetIs(target));
+
+        Page<Product> products = productService.getAllProducts(page, size, spec);
         model.addAttribute("products", products);
         return "admin/product/show";
     }
